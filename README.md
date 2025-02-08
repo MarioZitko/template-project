@@ -61,60 +61,28 @@ Open **`http://localhost:3000`** to see your project.
 ## 🎨 Using ShadCN UI
 ShadCN UI is a **customizable component library** built with Radix UI and Tailwind CSS.
 
-### **1️⃣ Install ShadCN UI**
-If not already installed, initialize it:
-```bash
-npx shadcn-ui@latest init
-```
-It will prompt you to set up the **components directory**.
-
-### **2️⃣ Add New Components**
+### **1️⃣ Add New Components**
 To add UI components, use:
 ```bash
 npx shadcn-ui@latest add button card input
 ```
 This will generate the components inside **`src/components/ui/`**.
 
-### **3️⃣ Customize Components**
-All ShadCN components are fully editable. Open **`src/components/ui/button.tsx`** and modify styles as needed.
+---
 
-Example customization:
+## 🎯 Absolute Imports
+✅ **Why?** No more `../../../components/Button.tsx` imports!
+
+Now import like this:
 ```tsx
-import { cn } from "@/lib/utils"
-
-export function Button({ children }: { children: React.ReactNode }) {
-  return (
-    <button className="bg-primary text-primary-foreground px-4 py-2 rounded">
-      {children}
-    </button>
-  )
-}
+import Button from "@/components/ui/button";
 ```
 
 ---
 
 ## 🎨 Theming
 
-### **1️⃣ Enable CSS Variables for Theming**
-Modify `components.json`:
-```json
-{
-  "style": "default",
-  "rsc": true,
-  "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "src/app/globals.css",
-    "baseColor": "slate",
-    "cssVariables": true
-  },
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils"
-  }
-}
-```
-
-### **2️⃣ Define Your Theme in `globals.css`**
+### **1️⃣ Define Your Theme in `globals.css`**
 ```css
 :root {
   --background: 0 0% 100%;
@@ -129,7 +97,7 @@ Modify `components.json`:
 }
 ```
 
-### **3️⃣ Update Tailwind Config (`tailwind.config.ts`)**
+### **2️⃣ Update Tailwind Config (`tailwind.config.ts`)**
 ```ts
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
@@ -156,32 +124,18 @@ const config: Config = {
 };
 
 export default config;
-```
 
-### **4️⃣ Switching Between Light & Dark Mode**
-Install `next-themes`:
-```bash
-npm install next-themes
-```
-Modify `src/app/layout.tsx`:
+---
+
+## 🔥 Toast Notifications (Sonner)
+
 ```tsx
-"use client";
+import { Toaster, toast } from "sonner";
 
-import { ThemeProvider } from "next-themes";
-import { ReactNode } from "react";
-
-export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en">
-      <body className="bg-background text-foreground">
-        <ThemeProvider attribute="class" defaultTheme="system">
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  );
-}
+<Toaster position="top-right" />;
+toast.success("Action completed successfully!");
 ```
+🎯 **Benefit:** Instant toast messages with no setup hassle.
 
 ---
 
@@ -223,23 +177,7 @@ npm start
 
 ---
 
-## ❓ Troubleshooting
-**ShadCN UI not working?** Run:
-```bash
-npx shadcn-ui@latest init
-npx shadcn-ui@latest add button
-```
-
-**TypeScript errors?** Run:
-```bash
-npx tsc --noEmit
-```
-
----
-
 ## 📜 License
 This project is open-source under the **MIT License**.
 
 ---
-
-🚀 **Happy coding!** If you have questions, feel free to reach out. 🔥
