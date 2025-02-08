@@ -152,6 +152,33 @@ npx prettier --write .
 
 ---
 
+## 🗺️ SEO & Sitemap Configuration
+### **1️⃣ Metadata & OpenGraph**
+Modify `layout.tsx` for global SEO:
+```tsx
+export const metadata = {
+  title: "My Next.js 15 App",
+  description: "A high-performance Next.js 15 website optimized for SEO.",
+  openGraph: {
+    title: "My Next.js 15 App",
+    description: "Optimized for SEO & performance",
+    url: "https://yourwebsite.com",
+    images: [{ url: "https://yourwebsite.com/og-image.jpg" }],
+  },
+};
+```
+
+### **2️⃣ Sitemap Behavior**
+Run:
+```bash
+npm run build && npm run postbuild
+```
+Now Next.js will generate:
+- **`public/sitemap.xml`** → List of all pages for search engines.
+- **`public/robots.txt`** → Controls what search engines can crawl.
+
+---
+
 ## 📦 Building for Production
 To generate a production build:
 ```bash
