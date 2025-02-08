@@ -81,17 +81,106 @@ All ShadCN components are fully editable. Open **`src/components/ui/button.tsx`*
 Example customization:
 ```tsx
 import { cn } from "@/lib/utils"
-import { ButtonHTMLAttributes, forwardRef } from "react"
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
+export function Button({ children }: { children: React.ReactNode }) {
+  return (
+    <button className="bg-primary text-primary-foreground px-4 py-2 rounded">
+      {children}
+    </button>
+  )
+}
+```
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, ...props }, ref) => {
-    return <button ref={ref} className={cn("bg-primary px-4 py-2 rounded", className)} {...props} />
+---
+
+## 🎨 Theming
+
+### **1️⃣ Enable CSS Variables for Theming**
+Modify `components.json`:
+```json
+{
+  "style": "default",
+  "rsc": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "src/app/globals.css",
+    "baseColor": "slate",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
   }
-)
+}
+```
 
-export default Button
+### **2️⃣ Define Your Theme in `globals.css`**
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+}
+
+.dark {
+  --background: 222.2 47.4% 11.2%;
+  --foreground: 0 0% 100%;
+}
+```
+
+### **3️⃣ Update Tailwind Config (`tailwind.config.ts`)**
+```ts
+import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
+
+const config: Config = {
+  darkMode: ["class"],
+  content: [
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+      },
+    },
+  },
+  plugins: [tailwindcssAnimate],
+};
+
+export default config;
+```
+
+### **4️⃣ Switching Between Light & Dark Mode**
+Install `next-themes`:
+```bash
+npm install next-themes
+```
+Modify `src/app/layout.tsx`:
+```tsx
+"use client";
+
+import { ThemeProvider } from "next-themes";
+import { ReactNode } from "react";
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body className="bg-background text-foreground">
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
 ```
 
 ---
