@@ -168,7 +168,16 @@ export const metadata = {
 };
 ```
 
-### **2️⃣ Sitemap Behavior**
+### **2️⃣ Modify Sitemap config**
+Modify `next-sitemap.config.ts` to include your webpage URL:
+```tsx
+const config: IConfig = {
+  siteUrl: 'https://yourwebsite.com', // Change this to your actual site URL
+  generateRobotsTxt: true, // Generates robots.txt file
+};
+```
+
+### **3️⃣ Sitemap Behavior**
 Run:
 ```bash
 npm run build && npm run postbuild
