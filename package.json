@@ -1,7 +1,10 @@
 {
   "name": "template-project",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Next.js 15 Template project using React and ShadCN",
+  "author": "Mario Žitković",
+  "license": "MIT",
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
